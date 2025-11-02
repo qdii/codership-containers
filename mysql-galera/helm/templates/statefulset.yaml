@@ -38,6 +38,9 @@ spec:
         - name: datadir # same as in containers and volumes
           mountPath: /var/lib/mysql
           readOnly: false
+      {{- if .Values.topologySpreadConstraints }}
+      topologySpreadConstraints: {{ toYaml .Values.topologySpreadConstraints | nindent 8 }}
+      {{- end}}
       containers:
       - name: mysql-galera-node
         image: {{ template "mysql-galera.image" . }}
